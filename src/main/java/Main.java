@@ -1,44 +1,18 @@
-package main.java;// Правила:
-// 1. Без ООП. Код пишется в процедурном стиле.
-// 2. Есть список слов из которого выбирается случайное.
-// 3. Всего 6 попыток отгадать слово.
-//    Порядок рисовки: голова с веревкой, тело, руки, ноги.
+package main.java;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
-// Рисунок:
-/*
-System.out.println("""
-                        _________
-                       |/      |                     \s
-                       |       .O                    \s
-                       |      /U\                   \\s
-                       |       ||                    \s
-                      /|\                            \
-                ======|||==============================
-                """);
-*/
+import java.util.Random;
 
-// Интерфейс:
-/*
-        _________
-       |/                            \s
-       |                             \s
-       |                            \\s
-       |                             \s
-      /|\                            \
-======|||==============================
-
-Р Е Л И _ И _
-
-Введите букву:
- */
 
 public class Main {
 
     // Счетчик ошибок.
     // При достижении 6 - игра заканчивается.
     static int errorCounter;
-
+    static boolean canReadFileWithWords = false;
     static char[] lettersInWord;
     static int[] guessedLettersInWord;
 
@@ -62,22 +36,38 @@ public class Main {
     }
 
     public static String getWord() {
-        int numberOfRows = getRandomNumber();
+        int lineNumber = getRandomLineNumber();
         return "";
     }
 
-    public static int getRandomNumber() {
+    // Получаем случайный номер строки из Words
+    public static int getRandomLineNumber() {
         int minNumber = 0;
         int maxNumber = getNumberOfRowsFromFileOfWords();
+        Random random = new Random();
 
-        // возвращаем число от minNumber до maxNumber
-        return 0;
+        return random.nextInt((maxNumber - minNumber) + 1) + minNumber;
     }
 
+    // Получаем максимальное количество строк в файле Words.
     public static int getNumberOfRowsFromFileOfWords() {
-        // Открываем файл со словами.
-        // Возвращаем максимальное количество строк.
-        return 0;
+        String filePath = "src/main/resources/Words";
+        int countRowsInFile = 0;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                countRowsInFile++;
+            }
+            System.out.println("Количество строк в файле: " + countRowsInFile);
+        } catch(IOException error) {
+            System.err.println("Ошибка при чтении файла: " + error.getMessage());
+            canReadFileWithWords = false;
+            return 0;
+        }
+        
+        canReadFileWithWords = true;
+        return countRowsInFile;
     }
 
     public static void showInterface() {
@@ -142,6 +132,44 @@ public class Main {
         showInterface();
     }
 
+
+
+
+
+    // Правила:
+// 1. Без ООП. Код пишется в процедурном стиле.
+// 2. Есть список слов из которого выбирается случайное.
+// 3. Всего 6 попыток отгадать слово.
+//    Порядок рисовки: голова с веревкой, тело, руки, ноги.
+
+
+// Рисунок:
+/*
+System.out.println("""
+                        _________
+                       |/      |                     \s
+                       |       .O                    \s
+                       |      /U\                   \\s
+                       |       ||                    \s
+                      /|\                            \
+                ======|||==============================
+                """);
+*/
+
+// Интерфейс:
+/*
+        _________
+       |/                            \s
+       |                             \s
+       |                            \\s
+       |                             \s
+      /|\                            \
+======|||==============================
+
+Р Е Л И _ И _
+
+Введите букву:
+ */
 
     // Примерный план работы приложения:
 
