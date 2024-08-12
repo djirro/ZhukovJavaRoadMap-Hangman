@@ -8,9 +8,8 @@ import java.util.Random;
 
 
 public class Main {
+    private static Random random = new Random();
 
-    // Счетчик ошибок.
-    // При достижении 6 - игра заканчивается.
     static int errorCounter;
     static boolean canReadFileWithWords = false;
     static char[] lettersInWord;
@@ -20,6 +19,7 @@ public class Main {
 
     }
 
+    // Старт игры.
     public static void startGame() {
         // errorCounter = 0
 
@@ -31,20 +31,21 @@ public class Main {
 
     }
 
+    // Окончание игры.
     public static void endGame() {
 
     }
 
+    // Получаем случайное слово из файла Words.
     public static String getWord() {
         int lineNumber = getRandomLineNumber();
         return "";
     }
 
-    // Получаем случайный номер строки из Words
+    // Получаем случайный номер строки из Words.
     public static int getRandomLineNumber() {
         int minNumber = 0;
         int maxNumber = getNumberOfRowsFromFileOfWords();
-        Random random = new Random();
 
         return random.nextInt((maxNumber - minNumber) + 1) + minNumber;
     }
@@ -70,22 +71,27 @@ public class Main {
         return countRowsInFile;
     }
 
+    // Отображаем интерфейс для пользователя в терминале.
     public static void showInterface() {
         showPictureOfTheGallows();
         showWord();
         enteringLetterFromKeyboard();
     }
 
+    // Показываем изображение, в зависимости от количества ошибок игрока.
     public static void showPictureOfTheGallows() {
-        // Смотрим переменную errorCounter и показываем изображение.
-        // Всего их 7.
+
     }
 
+    // Показываем слово пользователю в зависимости от открытых букв.
+    // Пример:
+    // [0, 0, 0, 0, 0, 0, 0] -> _ _ _ _ _ _ _
+    // [1, 1, 1, 1, 0, 1, 0] -> Р Е Л И _ И _
     public static void showWord() {
-        // [0, 0, 0, 0, 0, 0, 0] -> _ _ _ _ _ _ _
-        // [1, 1, 1, 1, 0, 1, 0] -> Р Е Л И _ И _
+
     }
 
+    // Ввод буквы с клавиатуры.
     public static void enteringLetterFromKeyboard() {
         char letter;
 
@@ -95,7 +101,7 @@ public class Main {
         if (!isInputLetterValid(letter)) {
             // Сообщить о том что буква указана неверно.
             enteringLetterFromKeyboard();
-        };
+        }
 
         if (isLetterInWordGuessed(letter)) {
             // Сообщить о том что буква уже открыта.
@@ -107,25 +113,29 @@ public class Main {
             showInterface();
         }
 
-        showLetterInWord(letter);
+        toggleLetterVisibility(letter);
     }
 
+    // Проверка - буква а-я, А-Я.
     public static boolean isInputLetterValid(char letter) {
-        // Проверка - буква а-я, А-Я;
+
         return true;
     }
 
+    // Проверка - скрыта ли буква в слове.
     public static boolean isLetterInWordGuessed(char letter) {
-        // Проверка - скрыта ли буква в слове.
+
         return true;
     }
 
+    // Проверяем есть ли буква в слове.
     public static boolean isLetterInWord(char letter) {
-        // Проверяем есть ли буква в слове
+
         return true;
     }
 
-    public static void showLetterInWord(char letter) {
+    // Переключаем угаданные буквы, чтобы сделать их видимыми.
+    public static void toggleLetterVisibility(char letter) {
         // Узнаем под какими индексами находятся буквы.
         // Меняем 0 на 1 в guessedLettersInWord во всех индексах.
 
@@ -192,7 +202,7 @@ System.out.println("""
 
     // Алгоритм: ввод буквы с клавиатуры -> isInputLetterValid() true ->
     // isLetterInWord() false - меняем рисунок и счетчик ошибок на +1. Проверяем не равен ли он 6.
-    // isLetterInWord() true -> showLetterInWord()
+    // isLetterInWord() true -> toggleLetterVisibility()
 
     // Отображение букв в слове: в начале игры получаем длину слова -> создаем массив со всеми нулями,
     // где 0 - `_`, а 1 - `буква`.
