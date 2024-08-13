@@ -5,10 +5,12 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 
 public class Main {
     private static Random random = new Random();
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
 
     static int errorCounter;
     static boolean canReadFileWithWords = false;
@@ -57,18 +59,17 @@ public class Main {
         int countRowsInFile = 0;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
+            while ((reader.readLine()) != null) {
                 countRowsInFile++;
             }
-            System.out.println("Количество строк в файле: " + countRowsInFile);
         } catch(IOException error) {
-            System.err.println("Ошибка при чтении файла: " + error.getMessage());
+            logger.warning("Ошибка при чтении файла: " + error.getMessage());
             canReadFileWithWords = false;
             return 0;
         }
         
         canReadFileWithWords = true;
+        logger.info("Количество строк в файле: " + countRowsInFile);
         return countRowsInFile;
     }
 
@@ -83,85 +84,101 @@ public class Main {
     public static void showPictureOfTheGallows() {
         switch (errorCounter) {
             case 0:
-                System.out.println("""
+                logger.info("""
+
                         _________
-                       |/                         
-                       |                         
-                       |     
-                       |                          
+                       |/
+                       |
+                       |
+                       |
                       /|\\
                 ======|||==============================
                 """);
+                break;
             case 1:
-                System.out.println("""
+                logger.info("""
+
                         _________
-                       |/      |                     
-                       |       .O                    
-                       |      
-                       |                          
+                       |/      |
+                       |       .O
+                       |
+                       |
                       /|\\
                 ======|||==============================
                 """);
+                break;
             case 2:
-                System.out.println("""
+                logger.info("""
+
                         _________
-                       |/      |                     
-                       |       .O                    
+                       |/      |
+                       |       .O
                        |       U
-                       |                          
+                       |
                       /|\\
                 ======|||==============================
                 """);
+                break;
             case 3:
-                System.out.println("""
+                logger.info("""
+
                         _________
-                       |/      |                     
-                       |       .O                    
+                       |/      |
+                       |       .O
                        |      /U
-                       |                         
+                       |
                       /|\\
                 ======|||==============================
                 """);
+                break;
             case 4:
-                System.out.println("""
+                logger.info("""
+
                         _________
-                       |/      |                     
-                       |       .O                    
+                       |/      |
+                       |       .O
                        |      /U\\
-                       |                          
+                       |
                       /|\\
                 ======|||==============================
                 """);
+                break;
             case 5:
-                System.out.println("""
+                logger.info("""
+
                         _________
-                       |/      |                     
-                       |       .O                    
+                       |/      |
+                       |       .O
                        |      /U\\
-                       |       |                   
+                       |       |
                       /|\\
                 ======|||==============================
                 """);
+                break;
             case 6:
-                System.out.println("""
-                        _________
-                       |/      |                     
-                       |       .O                    
+                logger.info("""
+
+                       _________
+                       |/      |
+                       |       .O
                        |      /U\\
-                       |       ||                   
+                       |       ||
                       /|\\
                 ======|||==============================
                 """);
+                break;
             default:
-                System.out.println("""
+                logger.info("""
+
                         _________
-                       |/       |                  
-                       |      error                   
-                       |     
-                       |                          
+                       |/       |
+                       |      error
+                       |
+                       |
                       /|\\
                 ======|||==============================
                 """);
+                break;
         }
     }
 
@@ -237,7 +254,8 @@ public class Main {
 
 // Рисунок:
 /*
-        System.out.println("""
+        logger.info("""
+
                         _________
                        |/      |
                        |       .O
