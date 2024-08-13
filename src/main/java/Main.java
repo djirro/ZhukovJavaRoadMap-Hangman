@@ -21,9 +21,10 @@ public class Main {
 
     // Старт игры.
     public static void startGame() {
-        // errorCounter = 0
+        String wordToGuess = "";
+        errorCounter = 0;
 
-        // getWord();
+        wordToGuess = getWord();
         // Находим количество букв в слове.
         // Создаем массив букв слова.
         // Создаем пустой массив с 0 и 1 для отображения отгаданных букв.
@@ -72,7 +73,7 @@ public class Main {
     }
 
     // Отображаем интерфейс для пользователя в терминале.
-    public static void showInterface() {
+    public static void showGameInterface() {
         showPictureOfTheGallows();
         showWord();
         enteringLetterFromKeyboard();
@@ -80,7 +81,88 @@ public class Main {
 
     // Показываем изображение, в зависимости от количества ошибок игрока.
     public static void showPictureOfTheGallows() {
-
+        switch (errorCounter) {
+            case 0:
+                System.out.println("""
+                        _________
+                       |/                         
+                       |                         
+                       |     
+                       |                          
+                      /|\\
+                ======|||==============================
+                """);
+            case 1:
+                System.out.println("""
+                        _________
+                       |/      |                     
+                       |       .O                    
+                       |      
+                       |                          
+                      /|\\
+                ======|||==============================
+                """);
+            case 2:
+                System.out.println("""
+                        _________
+                       |/      |                     
+                       |       .O                    
+                       |       U
+                       |                          
+                      /|\\
+                ======|||==============================
+                """);
+            case 3:
+                System.out.println("""
+                        _________
+                       |/      |                     
+                       |       .O                    
+                       |      /U
+                       |                         
+                      /|\\
+                ======|||==============================
+                """);
+            case 4:
+                System.out.println("""
+                        _________
+                       |/      |                     
+                       |       .O                    
+                       |      /U\\
+                       |                          
+                      /|\\
+                ======|||==============================
+                """);
+            case 5:
+                System.out.println("""
+                        _________
+                       |/      |                     
+                       |       .O                    
+                       |      /U\\
+                       |       |                   
+                      /|\\
+                ======|||==============================
+                """);
+            case 6:
+                System.out.println("""
+                        _________
+                       |/      |                     
+                       |       .O                    
+                       |      /U\\
+                       |       ||                   
+                      /|\\
+                ======|||==============================
+                """);
+            default:
+                System.out.println("""
+                        _________
+                       |/       |                  
+                       |      error                   
+                       |     
+                       |                          
+                      /|\\
+                ======|||==============================
+                """);
+        }
     }
 
     // Показываем слово пользователю в зависимости от открытых букв.
@@ -110,7 +192,7 @@ public class Main {
 
         if (!isLetterInWord(letter)) {
             // Увеличиваем счетчик ошибки
-            showInterface();
+            showGameInterface();
         }
 
         toggleLetterVisibility(letter);
@@ -139,7 +221,7 @@ public class Main {
         // Узнаем под какими индексами находятся буквы.
         // Меняем 0 на 1 в guessedLettersInWord во всех индексах.
 
-        showInterface();
+        showGameInterface();
     }
 
 
@@ -155,13 +237,13 @@ public class Main {
 
 // Рисунок:
 /*
-System.out.println("""
+        System.out.println("""
                         _________
-                       |/      |                     \s
-                       |       .O                    \s
-                       |      /U\                   \\s
-                       |       ||                    \s
-                      /|\                            \
+                       |/      |
+                       |       .O
+                       |      /U\\
+                       |       ||
+                      /|\\
                 ======|||==============================
                 """);
 */
@@ -193,7 +275,7 @@ System.out.println("""
 
     // Функция int getRandomNumberFromRowsInFile() обращается к функции
     // int getNumberOfRowsFromFileWords(), получая количество строк, после чего
-    // int getRandomNumberFromRowsInFile() возвращает рандомную строку.
+    // int getRandomNumberFromRowsInFile() возвращает случайную строку.
 
     // После того как мы получили слово у нас есть 6 попыток отгадать его.
     // Нужно организовать проверку введенного символа.
