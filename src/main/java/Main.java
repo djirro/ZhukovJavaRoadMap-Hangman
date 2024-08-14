@@ -218,25 +218,6 @@ public class Main {
         toggleLetterVisibility(letter);
     }
 
-    // Ввод буквы с клавиатуры
-    public static void enteringLetterForStartGame() {
-        logger.info("Нажми `Y`, чтобы начать с начала: ");
-        char letter = scanner.next().charAt(0);
-
-        if (!isInputLetterForStartGameValid(letter)) {
-            enteringLetterForStartGame();
-        }
-    }
-
-    public static boolean isInputLetterForStartGameValid(char letter) {
-        if (letter == 'y' || letter == 'Y') {
-            return true;
-        } else {
-            logger.warning("Введена неверная буква.");
-            return false;
-        }
-    }
-
     // Проверка - буква а-я, А-Я.
     public static boolean isInputLetterValid(char letter) {
 
@@ -261,6 +242,25 @@ public class Main {
         // Меняем 0 на 1 в guessedLettersInWord во всех индексах.
 
         showGameInterface();
+    }
+
+    // Ввод буквы с клавиатуры
+    public static void enteringLetterForStartGame() {
+        logger.info("Нажми `Y`, чтобы начать с начала: ");
+        char letter = scanner.next().charAt(0);
+
+        if (!isInputLetterForStartGameValid(letter)) {
+            enteringLetterForStartGame();
+        }
+    }
+
+    public static boolean isInputLetterForStartGameValid(char letter) {
+        if (letter == 'y' || letter == 'Y') {
+            return true;
+        } else {
+            logger.warning("Введена неверная буква.");
+            return false;
+        }
     }
 
 
