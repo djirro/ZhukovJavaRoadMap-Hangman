@@ -6,11 +6,13 @@ import java.io.IOException;
 
 import java.util.Random;
 import java.util.logging.Logger;
+import java.util.Scanner;
 
 
 public class Main {
     private static Random random = new Random();
     private static final Logger logger = Logger.getLogger(Main.class.getName());
+    private static Scanner scanner = new Scanner(System.in);
 
     static int errorCounter;
     static boolean canReadFileWithWords = false;
@@ -36,7 +38,8 @@ public class Main {
 
     // Окончание игры.
     public static void endGame() {
-
+        logger.info("Игра окончена!");
+        enteringLetterForStartGame();
     }
 
     // Получаем случайное слово из файла Words.
@@ -213,6 +216,25 @@ public class Main {
         }
 
         toggleLetterVisibility(letter);
+    }
+
+    // Ввод буквы с клавиатуры
+    public static void enteringLetterForStartGame() {
+        logger.info("Нажми `Y`, чтобы начать с начала: ");
+        char letter = scanner.next().charAt(0);
+
+        if (!isInputLetterForStartGameValid(letter)) {
+            enteringLetterForStartGame();
+        }
+    }
+
+    public static boolean isInputLetterForStartGameValid(char letter) {
+        if (letter == 'y' || letter == 'Y') {
+            return true;
+        } else {
+            logger.warning("Введена неверная буква.");
+            return false;
+        }
     }
 
     // Проверка - буква а-я, А-Я.
