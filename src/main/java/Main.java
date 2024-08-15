@@ -20,7 +20,7 @@ public class Main {
     static int[] guessedLettersInWord;
 
     public static void main(String[] args) {
-
+        enteringLetterFromKeyboard();
     }
 
     // Старт игры.
@@ -29,6 +29,7 @@ public class Main {
         errorCounter = 0;
 
         wordToGuess = getWord();
+        guessedLettersInWord = new int[wordToGuess.length()];
         // Находим количество букв в слове.
         // Создаем массив букв слова.
         // Создаем пустой массив с 0 и 1 для отображения отгаданных букв.
@@ -195,23 +196,22 @@ public class Main {
 
     // Ввод буквы с клавиатуры.
     public static void enteringLetterFromKeyboard() {
-        char letter;
+        logger.info("Введите букву: ");
+        char letter = scanner.next().charAt(0);
+        char upperCaseLetter = Character.toUpperCase(letter);
 
-        // Получаем букву с клавиатуры.
-        letter = 'a';
-
-        if (!isInputLetterValid(letter)) {
-            // Сообщить о том что буква указана неверно.
+        if (!isInputLetterValid(upperCaseLetter)) {
+            logger.warning("Вы ввели неверную букву. Попробуйте заново.");
             enteringLetterFromKeyboard();
         }
 
-        if (isLetterInWordGuessed(letter)) {
-            // Сообщить о том что буква уже открыта.
+        if (isLetterInWordGuessed(upperCaseLetter)) {
+            logger.warning("Введенная буква была открыта ранее. Попробуйте заново.");
             enteringLetterFromKeyboard();
         }
 
-        if (!isLetterInWord(letter)) {
-            // Увеличиваем счетчик ошибки
+        if (!isLetterInWord(upperCaseLetter)) {
+            errorCounter++;
             showGameInterface();
         }
 
@@ -220,26 +220,44 @@ public class Main {
 
     // Проверка - буква а-я, А-Я.
     public static boolean isInputLetterValid(char letter) {
+        if (Character.UnicodeBlock.of(letter) == Character.UnicodeBlock.CYRILLIC) {
+            return true;
+        } else {
+            return false;
+        }
 
-        return true;
     }
 
     // Проверка - скрыта ли буква в слове.
     public static boolean isLetterInWordGuessed(char letter) {
-
-        return true;
+        return isLetterInWord(letter);
     }
 
     // Проверяем есть ли буква в слове.
     public static boolean isLetterInWord(char letter) {
+        boolean isLetterSame;
 
-        return true;
+        for (int index = 0; index < lettersInWord.length; index++) {
+            isLetterSame = lettersInWord[index] == letter;
+
+            if (isLetterSame) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Переключаем угаданные буквы, чтобы сделать их видимыми.
     public static void toggleLetterVisibility(char letter) {
-        // Узнаем под какими индексами находятся буквы.
-        // Меняем 0 на 1 в guessedLettersInWord во всех индексах.
+        boolean isLetterSame;
+
+        for (int index = 0; index < lettersInWord.length; index++) {
+            isLetterSame = lettersInWord[index] == letter;
+
+            if (isLetterSame) {
+                guessedLettersInWord[index] = 1;
+            }
+        }
 
         showGameInterface();
     }
@@ -248,19 +266,25 @@ public class Main {
     public static void enteringLetterForStartGame() {
         logger.info("Нажми `Y`, чтобы начать с начала: ");
         char letter = scanner.next().charAt(0);
+        char upperCaseLetter = Character.toUpperCase(letter);
 
-        if (!isInputLetterForStartGameValid(letter)) {
+        if (!isInputLetterForStartGameValid(upperCaseLetter)) {
             enteringLetterForStartGame();
         }
     }
 
     public static boolean isInputLetterForStartGameValid(char letter) {
-        if (letter == 'y' || letter == 'Y') {
+        if (letter == 'Y') {
             return true;
         } else {
             logger.warning("Введена неверная буква.");
             return false;
         }
+    }
+
+    public static void convertWordToCharArray(String word) {
+        String upperCaseWord = word.toUpperCase();
+        lettersInWord = upperCaseWord.toCharArray();
     }
 
 
